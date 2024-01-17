@@ -4,8 +4,6 @@ This repository contains the source code for the Telegram bot [@FOC24Bot](https:
 
 Made in Python 3.11.5 using the [python-telegram-bot](https://python-telegram-bot.org/) module.
 
----
-
 ## Table of Contents
 
 1. [Features](#features)
@@ -14,12 +12,9 @@ Made in Python 3.11.5 using the [python-telegram-bot](https://python-telegram-bo
 1. [Tasklist](#tasklist)
 1. [Notes](#notes)
 
----
-
 ## Features
 
 The bot currently supports the following features:
-
 
 ### Commands:
 
@@ -31,11 +26,7 @@ The bot currently supports the following features:
 >
 > `/passOn [Optional:message]` - Replies with the previous message associated with the last execution of the command (the bot will inform the user if no message was saved previously). Then, save the message passed to this command (if any) for the next execution of the command.
 
----
-
 ## Compilation
-
----
 
 ## Tasklist
 
@@ -44,8 +35,6 @@ The bot currently supports the following features:
 - [ ] Create database and an interface for managing the database.
 - [ ] Add basic commands to the bot
 - [ ] Containerize the code to prepare for cloud hosting
-
----
 
 ## Notes
 
