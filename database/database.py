@@ -1,7 +1,9 @@
 class DatabaseManager():
     '''Singleton class for interacting with database'''
     class _DatabaseManager():
-        pass
+        def getUserPermissions(self, userID):
+            '''Get user permissions for the bot'''
+            pass
     
     instance = None
     
