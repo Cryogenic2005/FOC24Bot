@@ -24,27 +24,16 @@ The bot currently supports the following features:
 >
 > `/help` - Replies to the user with a list of commands, their descriptions and arguments (if any).
 >
-> `/passOn [Optional:message]` - Replies with the previous message associated with the last execution of the command (the bot will inform the user if no message was saved previously). Then, save the message passed to this command (if any) for the next execution of the command.
+> `/enable` - Sets bot status to active, allows execution of many other commands by users
+>
+> `/disable` - Sets bot status to inactive, stops execution of many commands by users
 
 ## Compilation
 
 ## Tasklist
 
-- [ ] Create script to start the bot with the necessary configurations.
+- [x] Create script to start the bot with the necessary configurations.
 - [ ] Implement logging module
 - [ ] Create database and an interface for managing the database.
 - [ ] Add basic commands to the bot
 - [ ] Containerize the code to prepare for cloud hosting
-
-## Notes
-
-I am making this bot for 2 main purposes:
-
-- Practice using the python-telegram-bot Python module to code a bot.
-- Practice maintaining a clean codebase.
-
-If all goes well, I will also:
-
-- Try migrating the bot to the cloud.
-
-- Run this bot for the Freshman Orientation Camp 2024 for event management purposes.
