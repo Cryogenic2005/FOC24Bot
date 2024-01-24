@@ -5,13 +5,13 @@ from telegram.ext import CallbackContext
 from bot.botController import BotStatus
 from .permissions import Permission, checkPermission
 
-def command(permissionLevel = Permission.USER):
+def command(permissionLevel = Permission.USER, checkBotStatus = True):
     def commandDecorator(func):
         @functools.wraps(func)
         async def wrapper(update, context: CallbackContext):
             
             # Checks if bot is active
-            if not BotStatus.isBotActive():
+            if checkBotStatus and not BotStatus.isBotActive():
                 await context.bot.sendMessage(
                     chat_id=update.effective_chat.id,
                     text="The bot is not currently active"
