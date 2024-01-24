@@ -3,7 +3,6 @@ import functools
 from telegram.ext import CallbackContext
 
 from bot.botController import BotStatus
-from database.database import DatabaseManager
 from .permissions import Permission, checkPermission
 
 def command(permissionLevel = Permission.USER):
@@ -13,17 +12,26 @@ def command(permissionLevel = Permission.USER):
             
             # Checks if bot is active
             if not BotStatus.isBotActive():
-                await context.bot.sendMessage("The bot is not currently active")
+                await context.bot.sendMessage(
+                    chat_id=update.effective_chat.id,
+                    text="The bot is not currently active"
+                )
+                return
             
             # Checks if user has permission to execute the command
             if not checkPermission(
                 userID=context.user_data.get("user_id", None), 
                 permissionLevel=permissionLevel
             ):
-                await context.bot.sendMessage("User {} is not allowed to execute the command".format(
-                    context.user_data.get("username", '(Unable to find user)')
-                ))
+                await context.bot.sendMessage(
+                    chat_id=update.effective_chat.id,
+                    text="User {} is not allowed to execute the command".format(
+                        context.user_data.get("username", '(Unable to find user)')
+                    )
+                )
+                return
             
+            #Execute the command if passed all checks
             await func(update, context)
         return wrapper
     return commandDecorator
