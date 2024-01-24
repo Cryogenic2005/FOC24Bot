@@ -1,5 +1,5 @@
-from .miscCommands import hello, help, start, stop
+from .miscCommands import hello, help, enable, disable
 
-commandList = [hello, help, start, stop]
+commandList = [hello, help, enable, disable]
 
 __all__ = ['commandList']

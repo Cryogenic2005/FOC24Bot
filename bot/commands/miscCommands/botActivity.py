@@ -3,7 +3,7 @@ from bot.commands.utils.decorators import command
 from bot.commands.utils.permissions import Permission
 
 @command(permissionLevel=Permission.ADMIN, checkBotStatus=False)
-async def start(update, context):
+async def enable(update, context):
     if BotStatus.isBotActive():
         await context.bot.sendMessage(
             chat_id=update.effective_chat.id,
@@ -17,7 +17,7 @@ async def start(update, context):
         )
     
 @command(permissionLevel=Permission.ADMIN, checkBotStatus=False)
-async def stop(update, context):
+async def disable(update, context):
     if not BotStatus.isBotActive():
         await context.bot.sendMessage(
             chat_id=update.effective_chat.id,
