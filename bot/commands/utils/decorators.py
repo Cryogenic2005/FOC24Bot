@@ -20,13 +20,13 @@ def command(permissionLevel = Permission.USER):
             
             # Checks if user has permission to execute the command
             if not checkPermission(
-                userID=context.user_data.get("user_id", None), 
+                userID=update.message.from_user.id, 
                 permissionLevel=permissionLevel
             ):
                 await context.bot.sendMessage(
                     chat_id=update.effective_chat.id,
                     text="User {} is not allowed to execute the command".format(
-                        context.user_data.get("username", '(Unable to find user)')
+                        update.message.from_user.username
                     )
                 )
                 return
