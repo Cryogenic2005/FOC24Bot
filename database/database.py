@@ -6,7 +6,7 @@ class DatabaseManager():
         def getUserPermissions(self, userID):
             '''Get user permissions for the bot'''
             
-            pass
+            return perms.Permission.OWNER
     
     instance = None
     
