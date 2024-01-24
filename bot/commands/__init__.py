@@ -1,3 +1,5 @@
-from bot.commands.CommandCollector import getAllCommands
+from .miscCommands import hello, help
 
-__all__ = ['getAllCommands']
+commandList = [hello, help]
+
+__all__ = ['commandList']

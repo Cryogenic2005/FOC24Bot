@@ -1,7 +1,7 @@
-from telegram import Update
-from telegram.ext import ContextTypes
+from bot.commands.utils.decorators import command
 
-async def hello(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+@command()
+async def hello(update, context):
     await context.bot.sendMessage(
         chat_id=update.effective_chat.id, 
         text=f"Hello, {update.message.from_user.username}"
