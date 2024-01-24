@@ -2,21 +2,13 @@ import bot.commands.utils.permissions as perms
 
 class DatabaseManager():
     '''Singleton class for interacting with database'''
-    class _DatabaseManager():
-        def getUserPermissions(self, userID):
-            '''Get user permissions for the bot'''
-            
-            return perms.Permission.OWNER
     
-    instance = None
+    def __new__(cls):
+        if not hasattr(cls, '_instance'):
+            cls._instance = super(DatabaseManager, cls).__new__(cls)
+        return cls._instance
     
-    def __init__(self):
-        if DatabaseManager.instance is None:
-            DatabaseManager.instance = DatabaseManager._DatabaseManager()
+    def getUserPermissions(self, userID):
+        '''Get user permissions for the bot'''
         
-    @staticmethod
-    def getDatabase():
-        if DatabaseManager.instance is None:
-            DatabaseManager.instance = DatabaseManager._DatabaseManager()
-            
-        return DatabaseManager.instance
+        return perms.Permission.OWNER
