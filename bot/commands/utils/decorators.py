@@ -1,14 +1,12 @@
 import functools
 
-from telegram.ext import CallbackContext
-
 from bot.botController import BotStatus
 from .permissions import Permission, checkPermission
 
 def command(permissionLevel = Permission.USER, checkBotStatus = True):
     def commandDecorator(func):
         @functools.wraps(func)
-        async def wrapper(update, context: CallbackContext):
+        async def wrapper(update, context):
             
             # Checks if bot is active
             if checkBotStatus and not BotStatus.isBotActive():
@@ -31,7 +29,7 @@ def command(permissionLevel = Permission.USER, checkBotStatus = True):
                 )
                 return
             
-            #Execute the command if passed all checks
+            # Execute the command if passed all checks
             await func(update, context)
         return wrapper
     return commandDecorator
