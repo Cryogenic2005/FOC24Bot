@@ -4,6 +4,8 @@ from database.databaseManager import DatabaseManager
 
 @command()
 async def start(update, context):
+    '''Starts interaction with bot and register user in bot database'''
+    
     db = DatabaseManager()
     db.registerUser(
         username=update.message.from_user.username,

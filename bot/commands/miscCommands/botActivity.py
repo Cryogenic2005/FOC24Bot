@@ -5,6 +5,7 @@ from bot.commands.utils.permissions import Permission
 @command(permissionLevel=Permission.ADMIN, checkBotStatus=False)
 async def enable(update, context):
     '''Set the bot status to be active'''
+    
     if BotStatus.isBotActive():
         await context.bot.sendMessage(
             chat_id=update.effective_chat.id,
