@@ -1,12 +1,13 @@
 from enum import Enum, auto
 
-import database
+from database.databaseManager import DatabaseManager
 
 class Permission(Enum):
     USER = 1
     MODERATOR = 2
     ADMIN = 3
     OWNER = 4
+        
     
 def checkPermission(userID, permissionLevel):
     """
@@ -18,4 +19,5 @@ def checkPermission(userID, permissionLevel):
     :return: True if the user is allowed to execute the command, False otherwise
     """
     
-    return database.DatabaseManager().getUserPermissions(userID).value >= permissionLevel.value if userID is not None else False
+    return Permission[DatabaseManager().getUserPermissions(userID)].value >= \
+        permissionLevel.value if userID is not None else False
