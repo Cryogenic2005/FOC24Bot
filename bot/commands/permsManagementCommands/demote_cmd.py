@@ -35,21 +35,25 @@ async def demote(update, context):
     
     user_perm = db.getUserPermissions(userID=user_id)
     
-    if not checkPermission(userID=update.effective_chat.id, permissionLevel=user_perm, strict=True):
+    if not checkPermission(
+        userID=update.message.from_user.id, 
+        permissionLevel=Permission[user_perm],
+        strict=True
+    ):
         await context.bot.sendMessage(
             chat_id = update.effective_chat.id,
-            text = "You cannot grant users permission levels higher than or equal to your own permission levels."
+            text = "You cannot demote users with permission levels higher than or equal to your own permission levels."
         )
         return
     
-    if not checkPermission(userID=user_id, permissionLevel=Permission[user_perm]):
+    if not checkPermission(userID=user_id, permissionLevel=Permission[permission]):
         await context.bot.sendMessage(
             chat_id = update.effective_chat.id,
             text = "You cannot demote users to permission levels higher than or equal their current permission levels."
         )
         return
     
-    db.updateUserPermissions(userID=user_id, permission=permission)
+    db.updateUserPermissions(userID=update.message.from_user.id, permission=permission)
     await context.bot.sendMessage(
         chat_id = update.effective_chat.id,
         text = "User permission level has been updated successfully."

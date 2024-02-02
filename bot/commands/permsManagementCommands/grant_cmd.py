@@ -35,14 +35,14 @@ async def grant(update, context):
     
     user_perm = db.getUserPermissions(userID=user_id)
     
-    if checkPermission(userID=update.effective_chat.id, permissionLevel=permission):
+    if not checkPermission(userID=update.message.from_user.id, permissionLevel=Permission[permission]):
         await context.bot.sendMessage(
             chat_id = update.effective_chat.id,
-            text = "You cannot grant users permission levels higher than or equal to your own permission levels."
+            text = "You cannot grant users a permission level higher than or equal to your own permission levels."
         )
         return
     
-    if checkPermission(userID=user_id, permissionLevel=Permission[user_perm]):
+    if checkPermission(userID=update.message.from_user.id, permissionLevel=Permission[user_perm]):
         await context.bot.sendMessage(
             chat_id = update.effective_chat.id,
             text = "User already has permission level higher than or equal to the specified permission level."
