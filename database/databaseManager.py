@@ -16,10 +16,19 @@ class DatabaseManager():
         if DatabaseManager._initialized:
             return
         
-        self.connection = sqlite3.connect(os.path.join("database","database.db"))
-        self.cursor = self.connection.cursor()
+        self._connection = sqlite3.connect(os.path.join("database","database.db"))
+        self._cursor = self._connection.cursor()
         
-        self.cursor.execute("CREATE TABLE IF NOT EXISTS users(username, user_id, permission)")
+        self._cursor.execute("CREATE TABLE IF NOT EXISTS users(username, user_id, permission)")
+    
+    # ---------------------- Miscellaneous Methods ----------------------------
+    
+    def printDB(self):
+        self._cursor.execute("SELECT * FROM users")
+        print(self._cursor.fetchall())
+        
+        
+    # ---------------------- User Management Methods --------------------------
     
     def registerUser(
             self,
@@ -28,25 +37,23 @@ class DatabaseManager():
             permission = "USER"
         ) -> None:
         
-        self.cursor.execute("SELECT user_id FROM users")
-        if (user_id,) in self.cursor.fetchall():
+        self._cursor.execute("SELECT user_id FROM users")
+        if (user_id,) in self._cursor.fetchall():
             return
         
-        self.cursor.execute("INSERT INTO users VALUES (?, ?, ?)",
+        self._cursor.execute("INSERT INTO users VALUES (?, ?, ?)",
             (username, user_id, permission)
         )
         
-        self.connection.commit()
-        
-    def printDB(self):
-        self.cursor.execute("SELECT * FROM users")
-        print(self.cursor.fetchall())
+        self._connection.commit()
     
     def getUserPermissions(self, userID):
         '''Get user permissions for the bot'''
         
-        self.cursor.execute("SELECT permission FROM users WHERE user_id=?", (userID, ))
-        permLevel = self.cursor.fetchall()[0][0]
-        print(permLevel)
-        return permLevel
+        self._cursor.execute("SELECT permission FROM users WHERE user_id=?", (userID, ))
+        query_result = self._cursor.fetchall()
         
+        if query_result == []:
+            return "UNREGISTERED"
+        
+        return query_result[0][0]
