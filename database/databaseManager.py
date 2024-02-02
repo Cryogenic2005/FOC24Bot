@@ -1,6 +1,8 @@
 import os
 import sqlite3
 
+from game.group_id_enum import GroupName
+
 class DatabaseManager():
     '''Singleton class for interacting with database'''
     
@@ -19,7 +21,9 @@ class DatabaseManager():
         self._connection = sqlite3.connect(os.path.join("database","database.db"))
         self._cursor = self._connection.cursor()
         
+        self._table_names = ["users", "images"]
         self._cursor.execute("CREATE TABLE IF NOT EXISTS users(username, user_id, permission)")
+        self._cursor.execute("CREATE TABLE IF NOT EXISTS images(name, group_id, difficulty, img_name)")
     
     # ---------------------- Miscellaneous Methods ----------------------------
     
@@ -27,6 +31,12 @@ class DatabaseManager():
         self._cursor.execute("SELECT * FROM users")
         print(self._cursor.fetchall())
         
+    def countTable(self, table_name):
+        if table_name not in self._table_names:
+            return 0
+        
+        self._cursor.execute("SELECT COUNT(*)")
+        return self._cursor.fetchall()
         
     # ---------------------- User Management Methods --------------------------
     
@@ -57,3 +67,23 @@ class DatabaseManager():
             return "UNREGISTERED"
         
         return query_result[0][0]
+    
+    # ---------------------- Game Management Methods -----------------------------------
+    
+    def insertImage(self, name: str, group_id: int, difficulty: int):
+        self._cursor.execute("INSERT INTO images VALUES (?, ?, ?, ?)",
+            (name, group_id, difficulty, f"{name}.png")
+        )
+        
+        self._connection.commit()
+        
+    def getImagesByGroupId(self, group_name: str):
+        if not hasattr(GroupName, group_name):
+            return None
+        
+        group_id = GroupName[group_name].value
+        
+        self._cursor.execute("SELECT img_name, difficulty FROM images WHERE group_id=?", (group_id, ))
+        
+        return self._cursor.fetchall()
+        
