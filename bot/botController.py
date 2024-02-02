@@ -4,7 +4,7 @@ class BotStatus:
     Note: No instances need to be created
     '''
     
-    _isBotActive = False
+    _isBotActive = True
     
     ACTIVE = True
     INACTIVE = False
