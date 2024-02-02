@@ -57,6 +57,22 @@ class DatabaseManager():
         
         self._connection.commit()
     
+    def getUserIdByUsername(self, username: str):
+        '''
+        Gets user id by username
+        
+        :param str username: User's username
+        :return: Returns user id if in database, otherwise returns None 
+        '''
+        
+        self._cursor.execute("SELECT user_id FROM users WHERE username=?", (username, ))
+        query_result = self._cursor.fetchall()
+        
+        if query_result == []:
+            return None
+        
+        return query_result[0][0]
+    
     def getUserPermissions(self, userID):
         '''Get user permissions for the bot'''
         
@@ -67,6 +83,24 @@ class DatabaseManager():
             return "UNREGISTERED"
         
         return query_result[0][0]
+    
+    def updateUserPermissions(self, userID: int, permission: str) -> bool:
+        '''
+        Update user permissions for the bot
+        
+        :param int userID: User Id
+        :param str permission: Permission level to update user to
+        :return bool: False user is not in database, True if update was successful 
+        '''
+        
+        self._cursor.execute("SELECT permission FROM users WHERE user_id=?", (userID,))
+        
+        query_result = self._cursor.fetchall()
+        if query_result == []:
+            return False
+        
+        self._cursor.execute("UPDATE users SET permission=? WHERE user_id=?", (permission, userID))
+        return True
     
     # ---------------------- Game Management Methods -----------------------------------
     
