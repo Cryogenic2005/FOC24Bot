@@ -9,6 +9,13 @@ async def register(update, context):
     '''
     
     db = DatabaseManager()
+    if db.getUserIdByUsername(update.message.from_user.username) is not None:
+        await context.bot.sendMessage(
+            chat_id=update.effective_chat.id,
+            text="User already registered with bot."
+        )
+        return
+    
     db.registerUser(
         username=update.message.from_user.username,
         user_id=update.message.from_user.id,
