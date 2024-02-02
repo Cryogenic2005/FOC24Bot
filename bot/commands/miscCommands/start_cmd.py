@@ -2,7 +2,7 @@ from bot.commands.utils.decorators import command
 from bot.commands.utils.permissions import Permission
 from database.databaseManager import DatabaseManager
 
-@command()
+@command(permissionLevel=Permission.UNREGISTERED)
 async def start(update, context):
     '''
     Starts interaction with bot
