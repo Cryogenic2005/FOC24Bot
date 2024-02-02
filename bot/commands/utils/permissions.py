@@ -3,21 +3,27 @@ from enum import Enum, auto
 from database.databaseManager import DatabaseManager
 
 class Permission(Enum):
+    UNREGISTERED = 0 
     USER = 1
     MODERATOR = 2
     ADMIN = 3
     OWNER = 4
         
     
-def checkPermission(userID, permissionLevel):
+def checkPermission(userID: int, permissionLevel: Permission, strict: bool = False) -> bool:
     """
-    Check if a user is allowed to execute a given command
+    Check if a user is has permission level above the specified level 
     
-    :param userID: ID of the user to check permissions against
-    :param permissionLevel: The minimum permission level allowed, taken from the Permission enum
+    :param int userID: ID of the user to check permissions against
+    :param Permission permissionLevel: The minimum permission level allowed, taken from the Permission enum
+    :param bool strict: If True, equal permission level would still be considered invalid, defaults to False
     
-    :return: True if the user is allowed to execute the command, False otherwise
+    :return bool: True if the user has permission level above the specified level, False otherwise
     """
     
+    if strict:
+        return Permission[DatabaseManager().getUserPermissions(userID)].value > \
+            permissionLevel.value if userID is not None else False
+        
     return Permission[DatabaseManager().getUserPermissions(userID)].value >= \
         permissionLevel.value if userID is not None else False
