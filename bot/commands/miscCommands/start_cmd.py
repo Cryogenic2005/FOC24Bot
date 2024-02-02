@@ -4,7 +4,10 @@ from database.databaseManager import DatabaseManager
 
 @command()
 async def start(update, context):
-    '''Starts interaction with bot and register user in bot database'''
+    '''
+    Starts interaction with bot
+    Registers user in bot database for verifying permission levels
+    '''
     
     db = DatabaseManager()
     db.registerUser(
