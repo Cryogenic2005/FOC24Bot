@@ -104,9 +104,30 @@ class DatabaseManager():
     
     # ---------------------- Game Management Methods -----------------------------------
     
-    def insertImage(self, name: str, group_id: int, difficulty: int):
+    def insertImage(
+        self, 
+        name: str, 
+        group_id: int, 
+        difficulty: int, 
+        img_name: str = None, 
+        img_format: str = "png"
+    ) -> None:
+        '''
+        Inserts a new image into the game database to track
+        
+        :param str name: Name of thing to be guessed in image in database
+        :param int group_id: Group ID of the image
+        :param int difficulty: Difficulty of the image to guess. Accepts integers between 1 and 3 (Easiest to Hardest)
+        :param str img_name: Name of the image file, default is name of the image followed by the file format
+        :param str img_format: Format of the image file, defaults to "png"
+        '''
+        
+        
+        if img_name is None:
+            img_name = f"{name}.{img_format}"
+        
         self._cursor.execute("INSERT INTO images VALUES (?, ?, ?, ?)",
-            (name, group_id, difficulty, f"{name}.png")
+            (name, group_id, difficulty, f"{name}.{img_format}")
         )
         
         self._connection.commit()
