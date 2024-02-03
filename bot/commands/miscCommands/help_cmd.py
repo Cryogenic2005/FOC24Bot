@@ -1,7 +1,8 @@
 import bot.commands
 from bot.commands.utils.decorators import command
+from bot.commands.utils.permissions import Permission
 
-@command(check_bot_status=False)
+@command(permission_level=Permission.UNREGISTERED, check_bot_status=False)
 async def help(update, context):
     '''
     Descriptions of all bot commands
