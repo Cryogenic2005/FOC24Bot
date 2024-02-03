@@ -1,7 +1,6 @@
 import os
 
-from telegram import Update
-from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler
+from telegram.ext import ApplicationBuilder
 from dotenv import load_dotenv
 
 from bot import handlers
@@ -15,4 +14,4 @@ if __name__ == "__main__":
         app.add_handler(handler)
     
     print("Bot is running")
-    app.run_polling()    
+    app.run_polling()
