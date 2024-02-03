@@ -1,17 +1,17 @@
 import bot.commands
 from bot.commands.utils.decorators import command
 
-@command(checkBotStatus=False)
+@command(check_bot_status=False)
 async def help(update, context):
     '''
     Descriptions of all bot commands
     '''
     
-    commandHelp = ""
-    for command in bot.commands.commandList:
-        commandHelp += "/{}: {}\n\n".format(command.__name__, command.__doc__.rstrip())
+    help_text = ""
+    for command in bot.commands.command_list:
+        help_text += "/{}: {}\n\n".format(command.__name__, command.__doc__.rstrip())
     
     await context.bot.sendMessage(
         chat_id=update.effective_chat.id, 
-        text=commandHelp
+        text=help_text
     )

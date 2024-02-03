@@ -2,7 +2,7 @@ from bot.botController import BotStatus
 from bot.commands.utils.decorators import command
 from bot.commands.utils.permissions import Permission
 
-@command(permissionLevel=Permission.ADMIN, checkBotStatus=False)
+@command(permission_level=Permission.ADMIN, check_bot_status=False)
 async def enable(update, context):
     '''
     Set the bot status to be active
@@ -20,7 +20,7 @@ async def enable(update, context):
             text="Bot is now active"
         )
     
-@command(permissionLevel=Permission.ADMIN, checkBotStatus=False)
+@command(permission_level=Permission.ADMIN, check_bot_status=False)
 async def disable(update, context):
     '''
     Set the bot status to be inactive

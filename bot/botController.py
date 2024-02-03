@@ -4,7 +4,7 @@ class BotStatus:
     Note: No instances need to be created
     '''
     
-    _isBotActive = True
+    _is_bot_active = True
     
     ACTIVE = True
     INACTIVE = False
@@ -12,9 +12,9 @@ class BotStatus:
     @classmethod
     def isBotActive(cls):
         '''Check if bot is active'''
-        return BotStatus._isBotActive
+        return cls._is_bot_active
 
     @classmethod
     def setBotStatus(cls, status: bool):
         '''Set the status of the bot to be active (True) or inactive (False)'''
-        BotStatus._isBotActive = status
+        cls._is_bot_active = status

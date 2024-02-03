@@ -2,7 +2,7 @@ from bot.commands.utils.decorators import command
 from bot.commands.utils.permissions import Permission
 from database.databaseManager import DatabaseManager
 
-@command(permissionLevel=Permission.UNREGISTERED)
+@command(permission_level=Permission.UNREGISTERED)
 async def register(update, context):
     '''
     Registers user in bot database

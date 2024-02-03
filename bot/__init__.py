@@ -1,10 +1,10 @@
 from telegram.ext import CommandHandler, filters
 
-from .commands import commandList
+from .commands import command_list
 
 handlers = []
 
-for command in commandList:
+for command in command_list:
     handlers.append(CommandHandler(
         command=command.__name__,
         callback=command,

@@ -2,7 +2,7 @@ from bot.commands.utils.permissions import Permission, checkPermission
 from bot.commands.utils.decorators import command
 from database.databaseManager import DatabaseManager
 
-@command(permissionLevel=Permission.ADMIN, checkBotStatus=False)
+@command(permission_level=Permission.ADMIN, check_bot_status=False)
 async def grant(update, context):
     '''
     Usage: /grant @[username] [permission-level]
@@ -15,9 +15,10 @@ async def grant(update, context):
     '''
     
     username = context.args[0].strip('@')
+    permission = context.args[1].upper()
+    
     db = DatabaseManager()
     user_id = db.getUserIdByUsername(username)
-    permission = context.args[1].upper()
     
     if not hasattr(Permission, permission) or permission == "UNREGISTERED":
         await context.bot.sendMessage(
@@ -35,14 +36,14 @@ async def grant(update, context):
     
     user_perm = db.getUserPermissions(userID=user_id)
     
-    if not checkPermission(userID=update.message.from_user.id, permissionLevel=Permission[permission]):
+    if not checkPermission(userID=update.message.from_user.id, permission_level=Permission[permission]):
         await context.bot.sendMessage(
             chat_id = update.effective_chat.id,
             text = "You cannot grant users a permission level higher than or equal to your own permission levels."
         )
         return
     
-    if checkPermission(userID=update.message.from_user.id, permissionLevel=Permission[user_perm]):
+    if checkPermission(userID=update.message.from_user.id, permission_level=Permission[user_perm]):
         await context.bot.sendMessage(
             chat_id = update.effective_chat.id,
             text = "User already has permission level higher than or equal to the specified permission level."

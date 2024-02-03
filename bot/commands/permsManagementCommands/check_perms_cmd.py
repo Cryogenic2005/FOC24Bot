@@ -2,7 +2,7 @@ from bot.commands.utils.permissions import Permission, checkPermission
 from bot.commands.utils.decorators import command
 from database.databaseManager import DatabaseManager
 
-@command(permissionLevel=Permission.MODERATOR, checkBotStatus=False)
+@command(permission_level=Permission.MODERATOR, check_bot_status=False)
 async def check_perms(update, context):
     '''
     Usage: /check_perms @[username]
@@ -14,6 +14,7 @@ async def check_perms(update, context):
     '''
     
     username = context.args[0].strip('@')
+    
     db = DatabaseManager()
     user_id = db.getUserIdByUsername(username)
     

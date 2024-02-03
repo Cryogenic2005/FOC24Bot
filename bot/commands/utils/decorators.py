@@ -3,7 +3,7 @@ import functools
 from bot.botController import BotStatus
 from .permissions import Permission, checkPermission
 
-def command(permissionLevel = Permission.USER, checkBotStatus = True):
+def command(permission_level = Permission.USER, check_bot_status = True):
     '''
     Mandatory decorator for all bot commands
     
@@ -16,7 +16,7 @@ def command(permissionLevel = Permission.USER, checkBotStatus = True):
         async def wrapper(update, context):
             
             # Checks if bot is active
-            if checkBotStatus and not BotStatus.isBotActive():
+            if check_bot_status and not BotStatus.isBotActive():
                 await context.bot.sendMessage(
                     chat_id=update.effective_chat.id,
                     text="The bot is not currently active"
@@ -26,7 +26,7 @@ def command(permissionLevel = Permission.USER, checkBotStatus = True):
             # Checks if user has permission to execute the command
             if not checkPermission(
                 userID=update.message.from_user.id, 
-                permissionLevel=permissionLevel
+                permission_level=permission_level
             ):
                 await context.bot.sendMessage(
                     chat_id=update.effective_chat.id,

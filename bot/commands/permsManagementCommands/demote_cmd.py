@@ -2,7 +2,7 @@ from bot.commands.utils.permissions import Permission, checkPermission
 from bot.commands.utils.decorators import command
 from database.databaseManager import DatabaseManager
 
-@command(permissionLevel=Permission.ADMIN, checkBotStatus=False)
+@command(permission_level=Permission.ADMIN, check_bot_status=False)
 async def demote(update, context):
     '''
     Usage: /demote @[username] [permission-level]
@@ -15,9 +15,10 @@ async def demote(update, context):
     '''
     
     username = context.args[0].strip('@')
+    permission = context.args[1].upper()
+    
     db = DatabaseManager()
     user_id = db.getUserIdByUsername(username)
-    permission = context.args[1].upper()
     
     if not hasattr(Permission, permission) or permission == "UNREGISTERED":
         await context.bot.sendMessage(
@@ -37,7 +38,7 @@ async def demote(update, context):
     
     if not checkPermission(
         userID=update.message.from_user.id, 
-        permissionLevel=Permission[user_perm],
+        permission_level=Permission[user_perm],
         strict=True
     ):
         await context.bot.sendMessage(
@@ -46,7 +47,7 @@ async def demote(update, context):
         )
         return
     
-    if not checkPermission(userID=user_id, permissionLevel=Permission[permission]):
+    if not checkPermission(userID=user_id, permission_level=Permission[permission]):
         await context.bot.sendMessage(
             chat_id = update.effective_chat.id,
             text = "You cannot demote users to permission levels higher than or equal their current permission levels."

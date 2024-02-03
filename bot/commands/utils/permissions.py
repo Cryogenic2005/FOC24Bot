@@ -10,7 +10,7 @@ class Permission(Enum):
     OWNER = 4
         
     
-def checkPermission(userID: int, permissionLevel: Permission, strict: bool = False) -> bool:
+def checkPermission(userID: int, permission_level: Permission, strict: bool = False) -> bool:
     """
     Check if a user is has permission level above the specified level 
     
@@ -23,7 +23,7 @@ def checkPermission(userID: int, permissionLevel: Permission, strict: bool = Fal
     
     if strict:
         return Permission[DatabaseManager().getUserPermissions(userID)].value > \
-            permissionLevel.value if userID is not None else False
+            permission_level.value if userID is not None else False
         
     return Permission[DatabaseManager().getUserPermissions(userID)].value >= \
-        permissionLevel.value if userID is not None else False
+        permission_level.value if userID is not None else False

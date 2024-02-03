@@ -17,27 +17,27 @@ async def group(update, context):
     
     db = DatabaseManager()
     
-    imgList = db.getImagesByGroupId(group_name)
+    img_list = db.getImagesByGroupId(group_name)
     
-    if imgList is None:
+    if img_list is None:
         await context.bot.sendMessage(
             chat_id=update.effective_chat.id, 
             text=f"No such group with the name {group_name}"
         )
         return
     
-    for imgName, difficulty in imgList:
-        imgPath = os.path.join("game", "images", imgName)
+    for img_name, difficulty in img_list:
+        img_path = os.path.join("game", "images", img_name)
         
-        if not os.path.exists(imgPath):
+        if not os.path.exists(img_path):
             await context.bot.sendMessage(
                 update.effective_chat.id,
-                text=f"Image {imgName} has not been added to the game yet"
+                text=f"Image {img_name} has not been added to the game yet"
             )
         else:
             await context.bot.sendPhoto(
                 update.effective_chat.id, 
-                photo=imgPath, 
+                photo=img_path, 
                 caption="Difficulty: {}".format(Difficulty(difficulty).name)
             )
     
