@@ -12,6 +12,8 @@ def command(permission_level = Permission.USER, check_bot_status = True):
     '''
     
     def commandDecorator(func):
+        func.permission_level = permission_level
+        
         @functools.wraps(func)
         async def wrapper(update, context):
             
