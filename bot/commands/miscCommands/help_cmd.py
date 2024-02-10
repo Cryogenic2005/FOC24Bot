@@ -1,6 +1,6 @@
 import bot.commands
 from bot.commands.utils.decorators import command
-from bot.commands.utils.permissions import Permission
+from bot.commands.utils.permissions import Permission, checkPermission
 
 @command(permission_level=Permission.UNREGISTERED, check_bot_status=False)
 async def help(update, context):
@@ -10,7 +10,8 @@ async def help(update, context):
     
     help_text = ""
     for command in bot.commands.command_list:
-        help_text += "/{}: {}\n\n".format(command.__name__, command.__doc__.rstrip())
+        if checkPermission(update.message.from_user.id, command.permission_level):
+            help_text += "/{}: {}\n\n".format(command.__name__, command.__doc__.rstrip())
     
     await context.bot.sendMessage(
         chat_id=update.effective_chat.id, 
