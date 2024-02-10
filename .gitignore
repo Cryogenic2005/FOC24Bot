@@ -8,3 +8,6 @@ database/database.db
 
 game/images/*
 !game/images/.keep
+
+logs/*
+!logs/.keep
