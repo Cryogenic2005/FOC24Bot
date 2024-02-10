@@ -90,16 +90,17 @@ class DatabaseManager():
         
         :param int userID: User Id
         :param str permission: Permission level to update user to
-        :return bool: False user is not in database, True if update was successful 
+        :return bool: True if update was successful, False otherwise
         '''
         
         self._cursor.execute("SELECT permission FROM users WHERE user_id=?", (userID,))
-        
         query_result = self._cursor.fetchall()
         if query_result == []:
             return False
         
         self._cursor.execute("UPDATE users SET permission=? WHERE user_id=?", (permission, userID))
+        
+        self._connection.commit()
         return True
     
     # ---------------------- Game Management Methods -----------------------------------

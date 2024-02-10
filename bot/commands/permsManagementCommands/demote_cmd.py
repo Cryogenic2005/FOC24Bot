@@ -54,7 +54,7 @@ async def demote(update, context):
         )
         return
     
-    db.updateUserPermissions(userID=update.message.from_user.id, permission=permission)
+    db.updateUserPermissions(userID=user_id, permission=permission)
     await context.bot.sendMessage(
         chat_id = update.effective_chat.id,
         text = "User permission level has been updated successfully."
