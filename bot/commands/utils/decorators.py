@@ -1,7 +1,10 @@
 import functools
+import logging
 
 from bot.botController import BotStatus
 from .permissions import Permission, checkPermission
+
+logger = logging.getLogger(__name__)
 
 def command(permission_level = Permission.USER, check_bot_status = True):
     '''
@@ -14,6 +17,7 @@ def command(permission_level = Permission.USER, check_bot_status = True):
     def commandDecorator(func):
         @functools.wraps(func)
         async def wrapper(update, context):
+            logger.info(f"User {update.message.from_user.username} executed command /{func.__name__}")
             
             # Checks if bot is active
             if check_bot_status and not BotStatus.isBotActive():
