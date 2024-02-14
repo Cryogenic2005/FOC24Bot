@@ -1,6 +1,10 @@
+import logging
+
 from bot.commands.utils.permissions import Permission, checkPermission
 from bot.commands.utils.decorators import command
 from database.databaseManager import DatabaseManager
+
+logger = logging.getLogger(__name__)
 
 @command(permission_level=Permission.ADMIN, check_bot_status=False)
 async def demote(update, context):
@@ -53,6 +57,8 @@ async def demote(update, context):
             text = "You cannot demote users to permission levels higher than or equal their current permission levels."
         )
         return
+    
+    logger.info("Demoted user {} to {}".format(user_id, permission))
     
     db.updateUserPermissions(userID=update.message.from_user.id, permission=permission)
     await context.bot.sendMessage(
