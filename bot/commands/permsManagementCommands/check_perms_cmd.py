@@ -1,6 +1,10 @@
+import logging
+
 from bot.commands.utils.permissions import Permission, checkPermission
 from bot.commands.utils.decorators import command
 from database.databaseManager import DatabaseManager
+
+logger = logging.getLogger(__name__)
 
 @command(permission_level=Permission.MODERATOR, check_bot_status=False)
 async def check_perms(update, context):
@@ -19,6 +23,8 @@ async def check_perms(update, context):
     user_id = db.getUserIdByUsername(username)
     
     if user_id is None:
+        logger.info('Unable to find user with username {}'.format(username))
+        
         await context.bot.sendMessage(
             chat_id = update.effective_chat.id,
             text = f"User @{username} has not registered with bot"

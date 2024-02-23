@@ -1,6 +1,10 @@
+import logging
+
 from bot.commands.utils.permissions import Permission, checkPermission
 from bot.commands.utils.decorators import command
 from database.databaseManager import DatabaseManager
+
+logger = logging.getLogger(__name__)
 
 @command(permission_level=Permission.ADMIN, check_bot_status=False)
 async def grant(update, context):
@@ -47,6 +51,8 @@ async def grant(update, context):
             text = "User already has permission level higher than or equal to the specified permission level."
         )
         return
+    
+    logger.info("Promoted user {} to {}".format(user_id, permission))
     
     db.updateUserPermissions(userID=user_id, permission=permission)
     await context.bot.sendMessage(
