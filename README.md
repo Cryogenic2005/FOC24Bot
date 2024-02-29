@@ -83,7 +83,6 @@ Run the bot with the following command
 ## Tasklist
 
 - [x] Create script to start the bot with the necessary configurations.
-- [ ] Implement logging module
+- [x] Implement logging module
 - [x] Create database and an interface for managing the database.
 - [x] Add basic commands to the bot
-- [ ] Containerize the code to prepare for cloud hosting
