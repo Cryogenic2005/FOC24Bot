@@ -18,8 +18,19 @@ async def demote(update, context):
     Permission levels: User < Moderator < Admin < Owner
     '''
     
-    username = context.args[0].strip('@')
-    permission = context.args[1].upper()
+    try:
+        username = context.args[0].strip('@')
+        permission = context.args[1].upper()
+    except IndexError:
+        await context.bot.sendMessage(
+            chat_id=update.effective_chat.id, 
+            text=f"Missing arguments. Please check the correct usage of the command below."
+        )
+        await context.bot.sendMessage(
+            chat_id=update.effective_chat.id, 
+            text=demote.__doc__
+        )
+        return
     
     db = DatabaseManager()
     user_id = db.getUserIdByUsername(username)

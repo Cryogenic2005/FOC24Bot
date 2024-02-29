@@ -9,11 +9,22 @@ async def group(update, context):
     '''
     Usage: /group [group-id]
     Example: /group ABCDEF
-    
+
     Returns a list of images for the group with that id
     '''
     
-    group_name = context.args[0]
+    try:
+        group_name = context.args[0]
+    except IndexError:
+        await context.bot.sendMessage(
+            chat_id=update.effective_chat.id, 
+            text=f"Missing arguments. Please check the correct usage of the command below."
+        )
+        await context.bot.sendMessage(
+            chat_id=update.effective_chat.id, 
+            text=group.__doc__
+        )
+        return
     
     db = DatabaseManager()
     
