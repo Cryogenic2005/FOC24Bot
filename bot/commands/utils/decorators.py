@@ -31,7 +31,7 @@ def command(permission_level = Permission.USER, check_bot_status = True):
             
             # Checks if user has permission to execute the command
             if not checkPermission(
-                userID=update.message.from_user.id, 
+                user_id=update.message.from_user.id, 
                 permission_level=permission_level
             ):
                 await context.bot.sendMessage(

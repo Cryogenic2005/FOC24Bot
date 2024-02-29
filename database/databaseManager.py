@@ -84,7 +84,7 @@ class DatabaseManager():
         
         return query_result[0][0]
     
-    def updateUserPermissions(self, userID: int, permission: str) -> bool:
+    def updateUserPermissions(self, user_id: int, permission: str) -> bool:
         '''
         Update user permissions for the bot
         
@@ -93,12 +93,12 @@ class DatabaseManager():
         :return bool: True if update was successful, False otherwise
         '''
         
-        self._cursor.execute("SELECT permission FROM users WHERE user_id=?", (userID,))
+        self._cursor.execute("SELECT permission FROM users WHERE user_id=?", (user_id,))
         query_result = self._cursor.fetchall()
         if query_result == []:
             return False
         
-        self._cursor.execute("UPDATE users SET permission=? WHERE user_id=?", (permission, userID))
+        self._cursor.execute("UPDATE users SET permission=? WHERE user_id=?", (permission, user_id))
         
         self._connection.commit()
         return True
